@@ -83,6 +83,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>sb-compte-docker</finalName>
 	</build>
 
 </project>

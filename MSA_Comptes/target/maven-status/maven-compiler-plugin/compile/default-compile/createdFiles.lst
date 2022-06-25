@@ -1,0 +1,8 @@
+fr/dauphine/project/msa/comptes/CompteBancaireController.class
+fr/dauphine/project/msa/comptes/OperationDto.class
+fr/dauphine/project/msa/comptes/CompteBancaireRepository.class
+fr/dauphine/project/msa/comptes/MsaApplication.class
+fr/dauphine/project/msa/comptes/CompteBancaire.class
+fr/dauphine/project/msa/comptes/Consumer.class
+fr/dauphine/project/msa/comptes/Config.class
+fr/dauphine/project/msa/comptes/CompteBancaireService.class
