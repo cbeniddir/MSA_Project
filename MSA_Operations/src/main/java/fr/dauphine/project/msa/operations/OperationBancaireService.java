@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 import java.util.Random;
 
 @Slf4j
@@ -29,5 +30,13 @@ public class OperationBancaireService {
         operationBancaireRepository.save(operationBancaire);
         publishService.createOperationPublish(operationBancaire);
         return operationBancaire;
+    }
+
+    public Optional<OperationBancaire> updateOperation(Long id, OperationBancaire newOperationBancaire){
+        return operationBancaireRepository.findOneById(id)
+                .map(oldItem -> {
+                    OperationBancaire updated = oldItem.updateWith(newOperationBancaire);
+                    return operationBancaireRepository.save(updated);
+                });
     }
 }

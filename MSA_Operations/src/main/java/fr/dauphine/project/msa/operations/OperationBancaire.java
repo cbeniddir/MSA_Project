@@ -13,11 +13,11 @@ public class OperationBancaire {
     @Id
     private Long id;
 
-    private String type_operation;
+    private String typeOperation;
 
-    private String iban_source;
+    private String ibanSource;
 
-    private String iban_destination;
+    private String ibanDestination;
 
     private BigDecimal montant;
 
@@ -27,12 +27,12 @@ public class OperationBancaire {
 
     }
 
-    public OperationBancaire(Long id, String type_operation, String iban_source, String iban_destination, BigDecimal montant, String date) {
+    public OperationBancaire(Long id, String typeOperation, String ibanSource, String ibanDestination, BigDecimal montant, String date) {
         super();
         this.id = id;
-        this.type_operation = type_operation;
-        this.iban_source = iban_source;
-        this.iban_destination = iban_destination;
+        this.typeOperation = typeOperation;
+        this.ibanSource = ibanSource;
+        this.ibanDestination = ibanDestination;
         this.montant = montant;
         this.date = date;
     }
@@ -42,15 +42,15 @@ public class OperationBancaire {
     }
 
     public String getTypeOperation() {
-        return type_operation;
+        return typeOperation;
     }
 
     public String getIbanSource() {
-        return iban_source;
+        return ibanSource;
     }
 
     public String getIbanDestination() {
-        return iban_destination;
+        return ibanDestination;
     }
 
     public BigDecimal getMontant() {
@@ -59,6 +59,17 @@ public class OperationBancaire {
 
     public String getDate() {
         return date;
+    }
+
+    public OperationBancaire updateWith(OperationBancaire item) {
+        return new OperationBancaire(
+                this.id,
+                item.typeOperation,
+                item.ibanSource,
+                item.ibanDestination,
+                item.montant,
+                item.date
+        );
     }
 
 }

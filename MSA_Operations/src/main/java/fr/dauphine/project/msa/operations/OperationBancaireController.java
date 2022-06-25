@@ -3,13 +3,14 @@ package fr.dauphine.project.msa.operations;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.math.BigDecimal;
+import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 @RestController
@@ -42,6 +43,23 @@ public class OperationBancaireController {
     }
 
     //Update an operation
+    @PutMapping("/update-operation/{id}")
+    public ResponseEntity<OperationBancaire> updateOperationById(@PathVariable("id") Long id, @RequestBody OperationBancaire updatedItem) {
+
+        Optional<OperationBancaire> updated = operationBancaireService.updateOperation(id, updatedItem);
+
+        return updated
+                .map(value -> ResponseEntity.ok().body(value))
+                .orElseGet(() -> {
+                    OperationBancaire created = operationBancaireRepository.save(updatedItem);
+                    URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                            .path("/{id}")
+                            .buildAndExpand(created.getId())
+                            .toUri();
+                    return ResponseEntity.created(location).body(created);
+                });
+    }
+
 
     //Get list of operations by date
 
