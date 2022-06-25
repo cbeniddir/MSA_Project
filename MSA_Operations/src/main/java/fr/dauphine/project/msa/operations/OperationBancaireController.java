@@ -61,13 +61,31 @@ public class OperationBancaireController {
     }
 
 
-    //Get list of operations by date
+    //Get list of operations by iban source
+    @GetMapping("/get-operations-by-iban-source/{ibanSource}")
+    public List<OperationBancaire> getOperationsByIbanSource(@PathVariable String ibanSource){
+        List<OperationBancaire> operations = operationBancaireRepository.findByIbanSource(ibanSource);
+        return operations;
+    }
 
     //Get list of operations by iban_destination
-
-    //Get list of operations by iban_source
+    @GetMapping("/get-operations-by-iban-destination/{ibanDestination}")
+    public List<OperationBancaire> getOperationsByIbanDestination(@PathVariable String ibanDestination){
+        List<OperationBancaire> operations = operationBancaireRepository.findByIbanDestination(ibanDestination);
+        return operations;
+    }
 
     //Get list of operations by montant
+    @GetMapping("/get-operations-by-montant/{montant}")
+    public List<OperationBancaire> getOperationsByMontant(@PathVariable BigDecimal montant){
+        List<OperationBancaire> operations = operationBancaireRepository.findByMontant(montant);
+        return operations;
+    }
 
-    //Get list of operations by type
+    //Get list of operations by type operation
+    @GetMapping("/get-operations-by-type-operation/{typeOperation}")
+    public List<OperationBancaire> getOperationsByTypeOperation(@PathVariable String typeOperation){
+        List<OperationBancaire> operations = operationBancaireRepository.findByTypeOperation(typeOperation);
+        return operations;
+    }
 }
