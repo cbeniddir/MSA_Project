@@ -31,11 +31,10 @@ public class CompteBancaireService {
                 });
     }
 
-    //TODO : Preciser type d'operation
     public void updateCompteSource(OperationDto operationDto) {
         CompteBancaire compteSource = compteBancaireRepository.findByIban(operationDto.ibanSource);
         BigDecimal newSolde = compteSource.getSolde().add(operationDto.montant);
-        CompteBancaire newCompteBancaire = new CompteBancaire(compteSource.getId(), compteSource.getIban(), compteSource.getType(), compteSource.getInteret(), compteSource.getFrais(), newSolde);
+        CompteBancaire newCompteBancaire = new CompteBancaire(compteSource.getIban(), compteSource.getType(), compteSource.getInteret(), compteSource.getFrais(), newSolde);
         update(compteSource.getId(), newCompteBancaire);
         log.info("account persisted {}", newCompteBancaire);
     }
@@ -43,9 +42,17 @@ public class CompteBancaireService {
     public void updateCompteDestination(OperationDto operationDto) {
         CompteBancaire compteSource = compteBancaireRepository.findByIban(operationDto.ibanDestination);
         BigDecimal newSolde = compteSource.getSolde().subtract(operationDto.montant);
-        CompteBancaire newCompteBancaire = new CompteBancaire(compteSource.getId(), compteSource.getIban(), compteSource.getType(), compteSource.getInteret(), compteSource.getFrais(), newSolde);
+        CompteBancaire newCompteBancaire = new CompteBancaire(compteSource.getIban(), compteSource.getType(), compteSource.getInteret(), compteSource.getFrais(), newSolde);
         update(compteSource.getId(), newCompteBancaire);
         log.info("account persisted {}", newCompteBancaire);
+    }
+
+    public void deleteCompteById(Long id){
+        compteBancaireRepository.deleteById(id);
+    }
+
+    public void deleteCompteByIds(Iterable<Long> ids){
+        compteBancaireRepository.deleteAllByIdInBatch(ids);
     }
 
 }

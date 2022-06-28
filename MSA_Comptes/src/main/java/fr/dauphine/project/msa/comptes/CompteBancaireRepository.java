@@ -12,5 +12,7 @@ public interface CompteBancaireRepository extends JpaRepository<CompteBancaire, 
     List<CompteBancaire> findAll();
     CompteBancaire save(CompteBancaire compteBancaire);
     Optional<CompteBancaire> findOneById(Long id);
+    void deleteById(long id);
+    void deleteAllByIdInBatch(Iterable<Long> ids);
 
 }

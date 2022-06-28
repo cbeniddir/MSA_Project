@@ -4,12 +4,15 @@ package fr.dauphine.project.msa.comptes;
 import java.math.BigDecimal;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class CompteBancaire {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String iban;
@@ -26,7 +29,7 @@ public class CompteBancaire {
 
     }
 
-    public CompteBancaire(Long id, String iban, String type, BigDecimal interet, String frais, BigDecimal solde) {
+    public CompteBancaire(String iban, String type, BigDecimal interet, String frais, BigDecimal solde) {
         super();
         this.id = id;
         this.iban = iban;
@@ -60,7 +63,6 @@ public class CompteBancaire {
 
     public CompteBancaire updateWith(CompteBancaire item) {
         return new CompteBancaire(
-                this.id,
                 item.iban,
                 item.type,
                 item.interet,

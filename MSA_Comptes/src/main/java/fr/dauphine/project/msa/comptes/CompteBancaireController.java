@@ -1,15 +1,15 @@
 package fr.dauphine.project.msa.comptes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.math.BigDecimal;
 import java.net.URI;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
-import java.util.Random;
 
 @RestController
 public class CompteBancaireController {
@@ -29,15 +29,8 @@ public class CompteBancaireController {
 
   //Create an instance of account and insert it into database
   @PostMapping(path = "/create-account")
-  public CompteBancaire createCompte(@RequestParam String iban, @RequestParam String type, @RequestParam BigDecimal interet, @RequestParam String frais, @RequestParam BigDecimal solde){
-
-    Random rd = new Random();
-    Long id = rd.nextLong();
-    CompteBancaire compteBancaire = new CompteBancaire(id, iban, type, interet, frais, solde);
-
-    compteBancaireRepository.save(compteBancaire);
-
-    return compteBancaire;
+  public void createCompte(@RequestBody CompteBancaire compteBancaire){
+    service.create(compteBancaire);
   }
 
   //Get an account informations by iban
@@ -79,6 +72,17 @@ public class CompteBancaireController {
                       .toUri();
               return ResponseEntity.created(location).body(created);
             });
+  }
+
+  @DeleteMapping("/delete-compte/{id}")
+  public void deleteCompte(@PathVariable Long id){
+    service.deleteCompteById(id);
+  }
+
+  @DeleteMapping("/delete-comptes")
+  public void deleteComptes(@RequestBody Map<String, List<Long>> map){
+    List<Long> idList = map.get("ids");
+    service.deleteCompteByIds(idList);
   }
 
 }
