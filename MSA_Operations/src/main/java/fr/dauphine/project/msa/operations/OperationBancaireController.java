@@ -37,8 +37,8 @@ public class OperationBancaireController {
 
     //Create an instance of operation and insert it into database
     @PostMapping(path = "/create-operation")
-    public OperationBancaire createCompte(@RequestParam String typeOperation, @RequestParam String ibanSource, @RequestParam String ibanDestination, @RequestParam BigDecimal montant, @RequestParam String date) throws JsonProcessingException {
-        return operationBancaireService.createOperation(typeOperation, ibanSource, ibanDestination, montant, date);
+    public OperationBancaire createCompte(@RequestBody OperationBancaire operationBancaire) throws JsonProcessingException {
+        return operationBancaireService.createOperation(operationBancaire);
     }
 
     //Update an operation

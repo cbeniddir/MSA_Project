@@ -23,10 +23,7 @@ public class OperationBancaireService {
         this.publishService = publishService;
     }
 
-    public OperationBancaire createOperation(String typeOperation, String ibanSource, String ibanDestination, BigDecimal montant, String date)  throws JsonProcessingException {
-        Random rd = new Random();
-        Long id = rd.nextLong();
-        OperationBancaire operationBancaire = new OperationBancaire(id, typeOperation, ibanSource, ibanDestination, montant, date);
+    public OperationBancaire createOperation(OperationBancaire operationBancaire)  throws JsonProcessingException {
         operationBancaireRepository.save(operationBancaire);
         publishService.createOperationPublish(operationBancaire);
         return operationBancaire;
