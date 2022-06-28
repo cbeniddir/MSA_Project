@@ -14,6 +14,7 @@ public interface OperationBancaireRepository extends JpaRepository<OperationBanc
     List<OperationBancaire> findByIbanSource(String ibanSource);
     List<OperationBancaire> findByMontant(BigDecimal montant);
     List<OperationBancaire> findByTypeOperation(String typeOperation);
+    void deleteAllByIdInBatch(Iterable<Long> ids);
 
 
 }

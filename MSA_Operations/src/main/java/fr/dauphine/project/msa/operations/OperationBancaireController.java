@@ -10,6 +10,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.math.BigDecimal;
 import java.net.URI;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -63,28 +64,30 @@ public class OperationBancaireController {
     //Get list of operations by iban source
     @GetMapping("/get-operations-by-iban-source/{ibanSource}")
     public List<OperationBancaire> getOperationsByIbanSource(@PathVariable String ibanSource){
-        List<OperationBancaire> operations = operationBancaireRepository.findByIbanSource(ibanSource);
-        return operations;
+        return operationBancaireService.getOperationsByIbanSource(ibanSource);
     }
 
     //Get list of operations by iban_destination
     @GetMapping("/get-operations-by-iban-destination/{ibanDestination}")
     public List<OperationBancaire> getOperationsByIbanDestination(@PathVariable String ibanDestination){
-        List<OperationBancaire> operations = operationBancaireRepository.findByIbanDestination(ibanDestination);
-        return operations;
+        return operationBancaireService.getOperationsByIbanDestination(ibanDestination);
     }
 
     //Get list of operations by montant
     @GetMapping("/get-operations-by-montant/{montant}")
     public List<OperationBancaire> getOperationsByMontant(@PathVariable BigDecimal montant){
-        List<OperationBancaire> operations = operationBancaireRepository.findByMontant(montant);
-        return operations;
+        return operationBancaireService.getOperationsByMontant(montant);
     }
 
     //Get list of operations by type operation
     @GetMapping("/get-operations-by-type-operation/{typeOperation}")
     public List<OperationBancaire> getOperationsByTypeOperation(@PathVariable String typeOperation){
-        List<OperationBancaire> operations = operationBancaireRepository.findByTypeOperation(typeOperation);
-        return operations;
+        return operationBancaireService.getOperationsByTypeOperation(typeOperation);
+    }
+
+    @DeleteMapping("/delete-operations")
+    public void deleteOperations(@RequestBody Map<String, List<Long>> map){
+        List<Long> idList = map.get("ids");
+        operationBancaireService.deleteOperationByIds(idList);
     }
 }
